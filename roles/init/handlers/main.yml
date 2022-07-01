@@ -1,0 +1,8 @@
+---
+- name: rebuild bootloader
+  ansible.builtin.command:
+    cmd: /sbin/update-extlinux
+
+- name: reboot
+  ansible.builtin.reboot:
+    reboot_timeout: 300
