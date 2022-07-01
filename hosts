@@ -1,0 +1,9 @@
+[masters]
+master-[01:03]
+
+[workers]
+worker-[01:03]
+
+[k3s:children]
+masters
+workers
