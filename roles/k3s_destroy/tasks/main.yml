@@ -1,0 +1,19 @@
+- name: Check if agent uninstall script exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s-agent-uninstall.sh
+  register: agent_data
+
+- name: Destroy worker
+  ansible.builtin.command:
+    cmd: /usr/local/bin/k3s-agent-uninstall.sh
+  when: agent_data.stat.exists
+
+- name: Check if server uninstall script exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s-uninstall.sh
+  register: server_data
+
+- name: Destroy master
+  ansible.builtin.command:
+    cmd: /usr/local/bin/k3s-uninstall.sh
+  when: server_data.stat.exists
