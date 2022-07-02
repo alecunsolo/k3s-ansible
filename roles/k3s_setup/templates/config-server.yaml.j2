@@ -1,0 +1,15 @@
+{% if ansible_hostname != "master-01" %}
+server: https://{{ loadbalancer }}.{{ domain }}:6443
+{% endif %}
+token: {{ token }}
+write-kubeconfig-mode: 0600
+tls-san:
+  - {{ ansible_hostname }}.{{ domain }}
+  - {{ loadbalancer }}.{{ domain }}
+cluster-init: true
+disable:
+ - traefik
+ - local-storage
+ - servicelb
+node-taint:
+ - node-role.kubernetes.io/master=effect:NoSchedule

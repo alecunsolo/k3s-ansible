@@ -1,0 +1,34 @@
+---
+- name: Ensure k3s config directory exists
+  ansible.builtin.file:
+    path: /etc/rancher/k3s
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Setup master nodes
+  ansible.builtin.import_tasks: ./masters.yml
+  when: "'masters' in group_names"
+
+- name: Setup workers nodes
+  ansible.builtin.import_tasks: ./workers.yml
+  when: "'workers' in group_names"
+
+- name: Get kubeconfig
+  ansible.builtin.fetch:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: kubeconfig
+    flat: yes
+  run_once: true
+  tags: "kubeconfig"
+
+- name: Set loadbalancer url
+  become: false
+  command: >-
+    kubectl config set-cluster default
+      --server=https://{{ loadbalancer }}.{{ domain }}:6443
+      --kubeconfig=kubeconfig
+  run_once: true
+  delegate_to: localhost
+  tags: "kubeconfig"

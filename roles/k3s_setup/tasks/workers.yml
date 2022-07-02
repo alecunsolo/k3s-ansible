@@ -1,0 +1,13 @@
+---
+- name: Add k3s configuration file
+  ansible.builtin.template:
+    dest: /etc/rancher/k3s/config.yaml
+    src: config-agent.yaml.j2
+    owner: root
+    group: root
+    mode: 0640
+
+- name: Install k3s using the provided script
+  ansible.builtin.shell:
+    cmd: "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=agent sh -"
+    creates: /etc/init.d/k3s-agent
