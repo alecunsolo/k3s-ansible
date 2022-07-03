@@ -1,0 +1,15 @@
+---
+- name: Download calico operator manifests
+  ansible.builtin.get_url:
+    url: https://projectcalico.docs.tigera.io/manifests/tigera-operator.yaml
+    dest: /var/lib/rancher/k3s/server/manifests/tigera-operator.yaml
+    owner: root
+    group: root
+    mode: 0644
+- name: Install calico CR
+  ansible.builtin.template:
+    src: calico-resources.yaml.j2
+    dest: /var/lib/rancher/k3s/server/manifests/calico-resources.yaml
+    owner: root
+    group: root
+    mode: 0644

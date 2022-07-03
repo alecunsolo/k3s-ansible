@@ -1,3 +1,5 @@
 cluster_cidr: 10.42.0.0/16
 service_cidr: 10.43.0.0/16
 cluster_dns: 10.43.0.10
+custom_cni_enabled: false
+custom_cni: calico

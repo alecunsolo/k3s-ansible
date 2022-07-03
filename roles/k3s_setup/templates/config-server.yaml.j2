@@ -10,6 +10,10 @@ cluster-init: true
 cluster-cidr: {{ cluster_cidr }}
 service-cidr: {{ service_cidr }}
 cluster-dns: {{ cluster_dns }}
+{% if custom_cni_enabled %}
+flannel-backend: none
+disable-network-policy: true
+{% endif %}
 disable:
  - traefik
  - local-storage
