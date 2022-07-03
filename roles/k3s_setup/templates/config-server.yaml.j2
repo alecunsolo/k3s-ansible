@@ -7,6 +7,9 @@ tls-san:
   - {{ ansible_hostname }}.{{ domain }}
   - {{ loadbalancer }}.{{ domain }}
 cluster-init: true
+cluster-cidr: {{ cluster_cidr }}
+service-cidr: {{ service_cidr }}
+cluster-dns: {{ cluster_dns }}
 disable:
  - traefik
  - local-storage
