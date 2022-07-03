@@ -8,11 +8,11 @@
     mode: 0755
 
 - name: Setup master nodes
-  ansible.builtin.import_tasks: ./masters.yml
+  ansible.builtin.import_tasks: masters.yml
   when: "'masters' in group_names"
 
 - name: Setup workers nodes
-  ansible.builtin.import_tasks: ./workers.yml
+  ansible.builtin.import_tasks: workers.yml
   when: "'workers' in group_names"
 
 - name: Get kubeconfig
