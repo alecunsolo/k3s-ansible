@@ -7,3 +7,10 @@
   notify:
     - rebuild bootloader
     - reboot
+
+- name: install common packages
+  ansible.builtin.package:
+    name:
+      - rsync
+      - gzip
+    state: present
