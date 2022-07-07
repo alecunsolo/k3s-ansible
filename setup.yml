@@ -3,3 +3,28 @@
   become: yes
   roles:
   - k3s_setup
+
+- hosts: master-01
+  tasks:
+  - name: Get kubeconfig
+    become: true
+    ansible.builtin.fetch:
+      src: /etc/rancher/k3s/k3s.yaml
+      dest: kubeconfig
+      flat: yes
+    run_once: true
+    tags:
+      - kubeconfig
+      - never
+
+  - name: Set loadbalancer url
+    become: false
+    command: >-
+      kubectl config set-cluster default
+        --server=https://{{ loadbalancer }}.{{ domain }}:6443
+        --kubeconfig=kubeconfig
+    run_once: true
+    delegate_to: localhost
+    tags:
+      - kubeconfig
+      - never
