@@ -41,3 +41,4 @@
   ansible.builtin.shell:
     cmd: "curl -sfL https://get.k3s.io | sh -"
     creates: /etc/init.d/k3s
+  when: not skip_install

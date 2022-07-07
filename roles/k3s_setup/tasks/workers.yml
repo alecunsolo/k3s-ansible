@@ -11,3 +11,4 @@
   ansible.builtin.shell:
     cmd: "curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC=agent sh -"
     creates: /etc/init.d/k3s-agent
+  when: not skip_install
